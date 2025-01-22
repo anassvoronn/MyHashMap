@@ -19,6 +19,44 @@ public class MyHashMapTest {
         map.put("Даша", "13");
         Assert.assertEquals(2, map.size());
     }
+    
+    @Test
+    public void testPut_addedDuplications() {
+        MyHashMap map = new MyHashMap();
+        String pasha = "Паша";
+        map.put(pasha, 12);
+        map.put(pasha, 12);
+        map.put(pasha, 12);
+        map.put(pasha, 12);
+        map.put(pasha, 12);
+        map.put(pasha, 13);
+        Assert.assertEquals(1, map.size());
+        Assert.assertEquals(13, map.get(pasha));
+    }
+
+    @Test
+    public void testPut_addedDuplicationsNulls() {
+        MyHashMap map = new MyHashMap();
+        map.put(null, 12);
+        map.put(null, 12);
+        map.put(null, 12);
+        Assert.assertEquals(3, map.size());
+        Assert.assertEquals(12, map.get(null));
+    }
+    
+    @Test
+    public void testRemove_addedDuplicationsAndRemoved() {
+        MyHashMap map = new MyHashMap();
+        String pasha = "Паша";
+        map.put(pasha, 12);
+        map.put(pasha, 12);
+        map.put(pasha, 12);
+        map.put(pasha, 12);
+        map.put(pasha, 12);
+        map.remove(pasha);
+        Assert.assertEquals(0, map.size());
+        Assert.assertEquals(null, map.get(pasha));
+    }
 
     @Test
     public void testContainsKey() {
