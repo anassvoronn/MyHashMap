@@ -1,8 +1,7 @@
-package org.nastya.HashMapTest;
+package org.nastya.hashmap;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.nastya.HashMap.MyHashMap;
 
 public class MyHashMapTest {
     @Test
@@ -19,7 +18,7 @@ public class MyHashMapTest {
         map.put("Даша", "13");
         Assert.assertEquals(2, map.size());
     }
-    
+
     @Test
     public void testPut_addedDuplications() {
         MyHashMap map = new MyHashMap();
@@ -40,10 +39,10 @@ public class MyHashMapTest {
         map.put(null, 12);
         map.put(null, 12);
         map.put(null, 12);
-        Assert.assertEquals(3, map.size());
+        Assert.assertEquals(1, map.size());
         Assert.assertEquals(12, map.get(null));
     }
-    
+
     @Test
     public void testRemove_addedDuplicationsAndRemoved() {
         MyHashMap map = new MyHashMap();
@@ -55,7 +54,7 @@ public class MyHashMapTest {
         map.put(pasha, 12);
         map.remove(pasha);
         Assert.assertEquals(0, map.size());
-        Assert.assertEquals(null, map.get(pasha));
+        Assert.assertNull(map.get(pasha));
     }
 
     @Test

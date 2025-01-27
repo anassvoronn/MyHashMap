@@ -1,4 +1,4 @@
-package org.nastya.HashMap;
+package org.nastya.hashmap;
 
 import java.util.*;
 
@@ -27,7 +27,7 @@ public class MyHashMap implements Map<String, Object> {
     }
 
     private int getIndex(Object key) {
-        return key.hashCode() % table.length;
+        return (key == null) ? 0 : key.hashCode() % table.length;
     }
 
     @Override
@@ -47,11 +47,21 @@ public class MyHashMap implements Map<String, Object> {
             return null;
         }
         for (var entry : table[index]) {
-            if (entry.key.equals(key)) {
+            if (isEqual(key, entry.key)) {
                 return entry.value;
             }
         }
         return null;
+    }
+
+    private boolean isEqual(Object key, Object entryKey) {
+        if (key == null && entryKey == null) {
+            return true;
+        }
+        if (key == null || entryKey == null) {
+            return false;
+        }
+        return entryKey.hashCode() == key.hashCode() && entryKey.equals(key);
     }
 
     @Override
@@ -61,7 +71,7 @@ public class MyHashMap implements Map<String, Object> {
             return false;
         }
         for (var entry : table[index]) {
-            if (entry.key.equals(key)) {
+            if (isEqual(key, entry.key)) {
                 return true;
             }
         }
@@ -80,7 +90,7 @@ public class MyHashMap implements Map<String, Object> {
             table[index] = new LinkedList<>();
         }
         for (var entry : table[index]) {
-            if (entry.key.equals(key)) {
+            if (isEqual(key, entry.key)) {
                 Object oldValue = entry.value;
                 entry.value = value;
                 return oldValue;
@@ -93,6 +103,20 @@ public class MyHashMap implements Map<String, Object> {
 
     @Override
     public Object remove(Object key) {
+        int index = getIndex(key);
+        if (table[index] == null) {
+            return null;
+        }
+        Iterator<Entry> iterator = table[index].iterator();
+        while (iterator.hasNext()) {
+            Entry entry = iterator.next();
+            if (isEqual(key, entry.key)) {
+                Object value = entry.value;
+                iterator.remove();
+                size--;
+                return value;
+            }
+        }
         return null;
     }
 
